@@ -1,0 +1,105 @@
+CSCI 344 - Programming Language Concepts
+Assignment A0 (0 points)
+Due Monday, Aug 24, 2020
+
+NOTE:
+
+The purpose of this assignment is for you to become familiar with the
+process of how to submit your homework assignment answers. With few
+exceptions, all of your homework assignments will have this format.
+
+You are to answer each of these questions, indicated by lines following
+each '##QUESTION:' line, by entering your corresponding answer lines
+following each '##ANSWER:' line.  Please leave whitespace around your
+answers so they are easy to read. DO NOT ADD ANY TEXT TO THE '##ANSWER:'
+LINE.
+
+Your submission must include this entire TEXT file, with your answers
+added as described above.  Copy this file into a suitable working
+directory and edit this file using a text editor (NOT a word processor)
+by adding your answers.
+
+DO NOT MAKE ANY CHANGES TO THE QUESTIONS OR OTHER TEXT CONTAINED IN
+THIS FILE except for adding your answers to the questions or replacing
+obvious directives such as "<replace this ...>" or "**FIXME**".  Be sure
+your answers are on lines that *follow* each '##ANSWER:' line.  Add more
+whitespace in your answer lines if you need to do so, but LEAVE THE
+ORIGINAL FILE CONTENTS AS-IS.
+
+This file (a0) can be found on the CS lab server here:
+
+   /usr/local/pub/plcc/Assignments/A0/a0
+
+As described in the ##SUBMISSION REQUIREMENTS section at the end of this
+assignment description, your edited file 'a0' will be packaged into a zip
+file 'A0.zip' that you will submit in myCourses.
+
+##QUESTION 1 (0 pts):
+    What is your name, email address, and CSCI344 section number?
+
+##ANSWER:
+
+Nikhil Raina, nxr5013@g.rit.edu, CSCI.344.02-03
+
+##QUESTION 2 (0 pts):
+    Are you attending any RIT classes this semester in person?
+
+##ANSWER:
+
+    yes
+
+##QUESTION 3 (0 pts):
+    In what directory on the CS systems will you find
+    the material for this class (notes, assignments, PLCC, etc)?
+
+##ANSWER:
+
+    /usr/local/pub/plcc/
+
+##QUESTION 4 (0 pts):
+    What do the letters "PLCC" stand for?
+
+##ANSWER:
+
+    Programming Language compiler Compiler
+
+##QUESTION 5 (0 pts):
+    True/False: in this course, you will be learning how to write programs
+    in Cobol.
+
+##ANSWER:
+
+    False
+
+##SUBMISSION REQUIREMENTS
+    Create a flat zip file A0.zip (note the capital 'A') containing
+    ONLY the following file:
+
+    a0 (this file, with your answers in each ##ANSWER section)
+
+##SUBMISSION NOTES:
+
+    Copy this file (a0) to a suitable directory and make changes to this
+    file before submitting it. Do *not* make any changes to the file
+    EXCEPT BY ADDING YOUR ANSWERS FOLLOWING EACH OF THE ##ANSWER lines.
+
+    A 'flat' zip file contains only files, no directories (or "folders").
+    When I unzip your A0.zip submission, I should see *only* the file
+    'a0', and nothing else. In particular, there should not be a directory
+    named 'A0'.
+
+    Do *not* submit plain text files with extensions such as 'a0.txt'.
+    The Windows operating system often silently adds the '.txt' extension
+    to text files, so be sure that these extensions are removed when
+    adding them to your zip file. The best way to ensure this is to
+    do your work on the CS lab Ubuntu systems and to create your zip
+    file there. Assuming that you have populated your a0 file with your
+    answers, create your A0.zip subission file as follows:
+
+        zip A0 a0
+
+    Once your have done this, submit your A0.zip file to your A0 dropbox
+    in myCourses.
+
+    **The due date and time for this submission is Monday, Aug 24,
+    at 11:59pm.**
