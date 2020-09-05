@@ -1,0 +1,36 @@
+# Language LON (list of numbers)
+
+# Lexical specification
+skip WHITESPACE '\s+'
+NUM '\d+'
+LPAREN '\('
+RPAREN '\)'
+%
+# Grammar
+<lon>           ::= LPAREN <nums> RPAREN
+<nums>:NumsNode ::= <NUM> <nums>
+<nums>:NumsNull ::=
+%
+
+Lon
+%%%
+    public String toString() {
+    return "( " + nums.toString() + ")";
+}
+%%%
+
+# the NumsNode class has fields named 'num' and 'nums'
+NumsNode
+%%%
+    public String toString() {
+    return num + " " + nums.toString();
+}
+%%%
+
+# the NumsNull class has no fields
+NumsNull
+%%%
+    public String toString() {
+    return "";
+}
+%%%
