@@ -1,0 +1,62 @@
+# Lexical specifications or Alphabets allowed
+NL '\n'
+ZERO '0'
+ONE '1'
+
+%
+# Grammar that can be used
+<start>:ExtraZero	::= ZERO NL
+<start>:ExtraOne	::= ONE <bits> NL
+<bits>			**= <bit>
+<bit>:ZeroBit		::= ZERO
+<bit>:OneBit		::= ONE
+%
+
+Start
+%%%
+	public abstract String toString();
+%%%
+
+ExtraZero
+%%%
+	public String toString() {
+		return "0";
+	}
+%%%
+
+ExtraOne
+%%%
+	public String toString() {
+		return bits.eval() + "";
+	}
+%%%
+
+Bit
+%%%
+	public abstract int eval();
+%%%
+
+ZeroBit
+%%%
+	public int eval() {
+		return 0;
+	}
+%%%
+
+OneBit
+%%%
+	public int eval() {
+		return 1;
+	}
+%%%
+
+Bits
+%%%
+	public int eval() {
+		int sum = 1;
+		for (Bit bit: this.bitList) {
+			sum = sum * 2 + bit.eval();
+		}
+		return sum;
+	}
+%%%

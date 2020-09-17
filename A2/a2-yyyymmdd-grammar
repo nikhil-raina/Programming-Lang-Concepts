@@ -1,0 +1,43 @@
+# Lexical Specification
+NL '\n'
+DIGIT4 '\d\d\d\d'
+DIGIT2 '\d\d'
+SEP '/'
+# Grammar rules
+%
+<ymd>  ::= <DIGIT4>yyyy SEP <DIGIT2>mm SEP <DIGIT2>dd NL
+%
+# semantics go here
+Ymd
+%%%
+	public String toString() {
+		int dayNum = dayOfTheWeek(Integer.parseInt(this.dd.toString()), Integer.parseInt(this.mm.toString()), Integer.parseInt(this.yyyy.toString()));
+		switch (dayNum) {
+			case 0: return "Saturday";
+			case 1: return "Sunday";
+			case 2: return "Monday";
+			case 3: return "Tuesday";
+			case 4: return "Wednesday";
+			case 5: return "Thursday";
+			case 6: return "Friday";
+		}
+		return "";
+	}
+
+	public int dayOfTheWeek(int day, int month, int year) {
+		if (month == 1) {
+			month = 13;
+			year--;
+		}
+		if (month == 2) {
+			month = 14;
+			year--;
+		}
+
+		int yearOfCentury = year % 100;
+		int zeroBasedYear = year / 100;
+		int calculateDay = day + 13*(month + 1) / 5 + yearOfCentury + yearOfCentury / 4 + zeroBasedYear / 4 + 5 * zeroBasedYear;
+
+		return calculateDay % 7;
+	}
+%%%
