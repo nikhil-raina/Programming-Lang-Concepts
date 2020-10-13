@@ -1,2 +1,0 @@
-define double = proc(x) if x then +(2,.double(sub1(x))) else 0
-.double(5)
