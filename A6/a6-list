@@ -1,0 +1,33 @@
+define empty = 0 % gives the "empty list" a name
+define list = proc(x, xs) .pair(x, xs) % creates a non-empty list
+define lst752 = .list(7, .list(5, .list(2, empty)))
+define isEmpty = proc(xs) if xs then 0 else 1
+define first = fst
+define rest = snd
+
+define lbrack = 91 % ASCII value for left square bracket
+define rbrack = 93 % ASCII value for right square bracket
+
+% displayListAux to print the inside comma-separated list of items
+define displayList = 
+    proc(xs)
+    	{ displayChar lbrack
+	; .displayListAux(xs, 0)
+	; displayChar rbrack
+	}
+
+% this procedure displays the items in a list separated
+% by commas.  If the list is empty, display nothing.  The second
+% argument named comma? will be 1 if a comma should be displayed
+% prior to the next value to be displayed, otherwise it will be a
+% zero (which it is initially).
+define displayListAux = 
+    proc(xs, comma?)
+    	if xs
+	    then { if comma? 
+		 	then displayChar comma
+		   else 0
+		 ; display .first(xs)
+		 ; .displayListAux(.rest(xs), 1)
+	    	}
+	else 0	% don't display anything

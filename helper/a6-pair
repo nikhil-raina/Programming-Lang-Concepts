@@ -1,0 +1,17 @@
+define pair = proc(x ,y) proc(t) if t then y else x
+define p35 = .pair(3, 5)
+define fst = proc(p) .p(0) % p is assumed to be a pair
+define snd = proc(p) .p(1) % p is assumed to be a pair
+define lparen = 40
+define rparen = 41
+define comma = 44
+
+define displayPair = 
+    proc(p)
+    	{ displayChar lparen 	% left paren
+	; display .fst(p) 	% display the first element of the pair
+	; displayChar comma	% display a comma
+	; display .snd(p)	% display the second element of the pair
+	; displayChar rparen	% right paren
+	}
+

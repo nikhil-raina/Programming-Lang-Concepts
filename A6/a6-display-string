@@ -1,0 +1,22 @@
+define quote = 34 % ASCII value for quote
+
+% displayListAux to print the inside comma-separated list of items
+define displayString = 
+    proc(xs)
+    	{ displayChar quote
+	; .displayStringAux(xs)
+	; displayChar quote
+	}
+
+% this procedure displays the items in a list separated
+% by commas.  If the list is empty, display nothing.  The second
+% argument named comma? will be 1 if a comma should be displayed
+% prior to the next value to be displayed, otherwise it will be a
+% zero (which it is initially).
+define displayStringAux = 
+    proc(xs)
+    	if xs
+	    then {  displayChar .first(xs)
+		 ; .displayStringAux(.rest(xs))
+		}
+	else 0	% don't display anything

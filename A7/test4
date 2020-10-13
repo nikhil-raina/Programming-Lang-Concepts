@@ -1,0 +1,7 @@
+let
+          x = 3
+	          in
+		            let
+			                p = proc(t) { @@ ; +(t,x) } 
+					          in
+						              .p(5)

@@ -1,0 +1,8 @@
+define alphabet =
+          proc(x)
+	               if x
+		                    then {.alphabet(sub1(x)) ; displayChar +(x,64)}
+				                 else newline
+						    
+						           .alphabet(2)
+							          .alphabet(26)

@@ -1,0 +1,16 @@
+define size = proc(xs) 
+    { 
+        if xs then 
+	    +(.size(.rest(xs)), 1) 
+        else 0
+    }
+define lst38 = .list(3, .list(8,empty))
+define append = proc(xs, ys)
+    {
+      if xs then
+	{
+	  .list(.first(xs), .append(.rest(xs), ys))
+        }
+      else ys
+      
+    }

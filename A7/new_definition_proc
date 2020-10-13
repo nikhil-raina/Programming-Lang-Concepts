@@ -1,0 +1,4 @@
+define pair = proc(fst,snd) @ % .pair(...) evaluates to an EnvVal
+define fst = proc(p) <p>fst
+define snd = proc(p) <p>snd
+define p53 = .pair(5,3) % evaluates to an EnvVal, not a ProcVal
