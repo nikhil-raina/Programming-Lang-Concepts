@@ -1,0 +1,76 @@
+ % procedure to determine the size of a list
+define size = proc(xs) 		% xs is a list
+  if xs
+    then add1(.size(rest(xs)))  % xs is a nonempty list
+  else 
+    0 	                        % xs is an empty list
+
+% procedure to sum the elements in a list
+%   the sum of an empty list is zero
+define sum = proc(xs) 		% xs is a list
+  if xs
+    then +(first(xs),.sum(rest(xs)))	% adds the first number recursively
+  else
+    0
+
+% procedure to sum the elements in a list recursively
+define summ = proc(xs) % xs is a list
+  if xs
+    then
+      if list?(first(xs))
+        then +(.summ(first(xs)), .summ(rest(xs)))
+      else
+        +(first(xs), .summ(rest(xs)))
+  else
+    0
+
+define append = proc(xs, ys) % xs and ys are lists
+  if xs
+    then addFirst(first(xs), .append(rest(xs), ys))
+  else ys
+
+define flatten = proc(xs)	% xs is a list
+  if xs
+    then
+      if list?(first(xs))
+        then .append(.flatten(first(xs)), .flatten(rest(xs)))
+      else
+        addFirst(first(xs), .flatten(rest(xs)))
+   else 
+     []
+
+define shuttle = proc(xs, ys) % xs and ys are lists
+if xs
+  then .shuttle(rest(xs), addFirst(first(xs), ys))
+else 
+  ys
+
+% procedure to reverse a list, using *only* shuttle --
+% this is a one-liner!
+define reverse = proc(xs) % xs is a list
+  if xs
+    then
+      .shuttle(xs, [])
+   else
+     []
+% procedure to map a procedure on the elements of a list
+define map = proc(f, xs) % f is a procedure, xs is a list
+  if xs
+    then
+      addFirst(.f(first(xs)), .map(f, rest(xs)))
+  else
+    []
+
+
+% procedure to zip two lists using a procedure
+define zip = proc(g, xs, ys) % g is a procedure, xs and ys are lists
+  if xs
+    then addFirst(.g(first(xs), first(ys)), .zip(g, rest(xs), rest(ys)))
+  else
+    []
+
+% procedure to compose two procedures --
+% this is a one-liner!
+define compose = proc(f, g)
+  proc(x) .f(.g(x))
+
