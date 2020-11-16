@@ -1,0 +1,97 @@
+%-------- binTree begin --------
+define binTree =
+  class
+    static BTnode =
+      class extends myclass
+      field left
+      field val
+      field right
+      method init = proc(left, val, right) { 
+	set <this>left = left; 
+	set <this>val = val; 
+	set <this>right = right; 
+	this 
+      }
+      method sum = proc() +(.<right>sum(), +(.<left>sum(),val))
+      method nodeCount = proc() +(.<right>nodeCount(), +(.<left>nodeCount(),1))
+      method lt? = proc(x) {
+	if <?(val, x) then {
+	  if .<left>lt?(x) then {
+	      if .<right>lt?(x) then 
+		1
+	      else
+		0
+    	    } else 
+		0
+	} else
+	    0 
+      }
+
+      method gt? = proc(x) {
+	if >?(val, x) then {
+	  if .<left>gt?(x) then {
+	      if .<right>gt?(x) then 
+		1
+	      else
+		0
+    	    } else 
+		0
+	} else
+	    0 
+      }
+      method bst? = proc() {
+	if .<left>lt?(val) then {
+	  if .<right>gt?(val) then {
+	    1
+	  }
+	  else 0
+	}
+	else 0
+      }
+      method addBST = proc(v) {
+      	if <?(v, val) then {
+	  .makeBT(.<left>addBST(v), val, right)
+	} else {
+	    if >?(v, val) then {
+	      .makeBT(left, val, .<right>addBST(v))
+  	    } else {
+		this
+	    }
+	}
+      }
+      method traverse = proc() .append(.<left>traverse(), addFirst(val, .<right>traverse()))
+    end
+    static BTnull =
+      class extends myclass
+      method sum = proc() 0
+      method nodeCount = proc() 0
+      method lt? = proc(x) 1
+      method gt? = proc(x) 1
+      method bst? = proc() 1
+      method addBST = proc(v) .makeLeaf(v)
+      method traverse = proc() []
+      end
+    static nullNode = new BTnull % singleton
+    static makeBT = proc(left, val, right) .<new BTnode>init(left,val,right)
+    static makeLeaf = proc(val) .makeBT(nullNode, val, nullNode)
+    static list2BST = proc(xs) {	% xs is a list
+	if xs then {
+	  !<.list2BST(rest(xs))>addBST(first(xs))!>
+	} else {
+	  nullNode
+	}
+      }
+
+  end
+
+% define these top-level variables to simplify things
+define nullNode = <binTree>nullNode  % BTnull
+define makeBT = <binTree>makeBT      % [binTree, Val, binTree => BTNode]
+define makeLeaf = <binTree>makeLeaf  % [Val => BTNode]
+define append = proc(xs, ys) % xs and ys are lists
+  if xs
+    then addFirst(first(xs), .append(rest(xs), ys))
+  else ys
+define sort = proc(lst) !<binTree>list2BST(lst)>traverse()!>
+
+%-------- binTree end --------

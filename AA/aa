@@ -153,7 +153,7 @@ See the Submission Requirements at the end of this document.
 
 ##ANSWER: (!!DO NOT PUT ANYTHING ON THIS LINE!!)
 
-proc(x:int):int
+[int=>int]
 
 ##QUESTION 5 (5 pts):
     Show how you can modify the above expression by ADDING just four
