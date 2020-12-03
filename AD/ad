@@ -1,0 +1,330 @@
+CSCI 344 - Programming Language Concepts
+Assignment AD (30 points)
+Due Tuesday, Nov. 24, 2020
+
+NOTE:
+You are to answer each of these questions, indicated by a '##QUESTION:'
+line.  Submit your modified files as directed in the Submission
+requirements section below.
+
+This file can be found here:
+
+    /usr/local/pub/plcc/Assignments/AD/ad
+
+##NARRATIVE (Undirected graph)
+
+An *undirected graph* consists of a finite set of nodes N and a finite
+set of edges E, where each edge is a *two-set* {m,n} (a set with
+exactly two elements), where m and n are nodes and m != n.
+
+If e = {m,n} is a two-set in E, we say nodes m and n are *adjacent*
+and that m and n are *incident* to e.
+
+Since {m,n} = {n,m} as sets, the adjacency relation is symmetric.
+
+It is possible for an undirected graph to have nodes that are not adjacent
+to any other nodes. We call such nodes *isolated*.
+
+Suppose m and n are nodes in N. If there exists a sequence
+
+    {n_0,n_1}, {n_1,n_2}, ..., {n_(k-1),n_k}
+
+of edges in E such that n_0 = m and n_k = n, we say that this sequence
+is a *path* from m to n. We can also write this path as a sequence
+of nodes (n_0, n_1, ..., n_k), again with n_0 = m and n_k = n.
+
+If there is a path from m to n for every pair of nodes m and n in N,
+we say that the graph is *connected*.
+
+In AbcDatalog, we can represent an undirected graph as a relation named
+'edge', where edge(m,n) is given as a a 'fact' if nodes m and n are
+adjacent.  For such a graph to be undirected, we impose the symmetric
+relation on edges as follows:
+
+    edge(M,N) :- edge(N,M).
+
+This means that we only need to specify a fact such as
+
+    edge(m,n).
+
+and automatically the fact
+
+    edge(n,m).
+
+will be entered into the relation.
+
+Here is an example of a graph with five nodes, {a,b,c,d,e} and four
+edges:
+
+    edge(a,b).
+    edge(b,c).
+    edge(b,e).
+    edge(c,d).
+
+We will revisit this graph in the first QUESTION below.
+
+Our undirected graphs do not have loops (an edge from a node to itself),
+so the query edge(N,N)? should return no results.
+
+Given a collection of edges as described above, we can collect all
+of the nodes incident to edges into a 'node' predicate as follows:
+
+    node(X) :- edge(X,_).
+
+Because the edge relation is symmetric, this will capture all of the nodes
+that are not isolated. For the above example, the query
+
+    node(X)?
+
+would return the result
+
+    5 matches:
+    node(a)
+    node(b)
+    node(c)
+    node(d)
+    node(e)
+
+These matches will likely occur in a different order than shown here.
+
+In the remainder of this assignment, assume that all of our graphs
+are undirected and that there are no isolated nodes.
+
+The PLCC implementation of AbcDatalog is given in the directory
+
+    /usr/local/pub/plcc/Code/ABC
+
+To run programs in the ABC language, define environment variables
+as follows:
+
+    export ABC="/usr/local/pub/plcc/Code/ABC"
+    export CLASSPATH="$ABC/abcdatalog.jar:$ABC/Java"
+
+Once you have defined these environment variables, you can run the
+REP loop using the ABC language as follows:
+
+    java Rep
+
+##QUESTION 1 (path relation, 10 pts)
+
+In the ANSWER section below, show how to define a 'path' relation that
+represents the existence of a path from node X to node Y. Such a path
+is either an edge from X to Y, or it's a path from X to Z followed by
+an edge from Z to Y. (This is recursive, but it works.) When you test
+your solution, make sure you include the symmetry relation
+
+    edge(X,Y) :- edge(Y,X).
+
+and the node predicate
+
+    node(X) :- edge(X,_).
+
+Then use your 'path' relation to define a 'nopath' relation from node X
+to Y as follows: X is a node and Y is a node but path(X,Y) is false.
+In the case of 'nopath', you will need to qualify your variables X and
+Y as being nodes, otherwise the AbcDatalog engine will not accept your
+definition.
+
+Assuming that you have defined a graph by its edges, the following query
+
+    nopath(X,Y)?
+
+will return all of the pairs of nodes X and Y for which there is no path
+from X to Y. If the graph is connected, this query should return nothing.
+
+I will test your answer to this question on several test cases of
+undirected graphs by including the definitions you give below for
+'path' and 'nopath' to determine connectivity.
+
+##ANSWER: (!!DO NOT PUT ANYTHING ON THIS LINE!!)
+
+    % path rule
+    path(X,Y) :- edge(X,Y).
+    path(X,Y) :- edge(X,Z), edge(Z,Y). 
+    % nopath rule
+    nopath(X,Y) :- node(X), node(Y), not path(X,Y).
+
+##QUESTION 2 (graph-1, 5 pts)
+
+Consider the undirected graph defined by the following edges:
+
+    edge(a,b).
+    edge(b,c).
+    edge(b,e).
+    edge(c,d).
+
+Is this graph connected? Use your 'nopath' relation you defined in the
+previous question to examine this graph. Enter your answer in the ANSWER
+section below. If the graph is not connected, there may be many pairs
+of nodes that are not connected; in your answer just give ONE example of
+such a pair. Do *not* include the text in brackets [...] in your answer.
+
+[Hint: you may want to put your edge symmetry rule, your definitions for
+'path' and 'nopath', your 'edge' facts, and your 'node' predicate into
+a file named 'graph', for example. Then you can load all these in the
+the ABC interpreter as follows:
+
+    java Rep graph
+
+You can then perform queries such as
+
+    --> path(X,Y)?
+
+to see all of the nodes X and Y for which there is a path from X to Y.
+Other queries are possible. For example, if you want to see all of the
+nodes reachable by a path starting at node 'a', you can perform the query
+
+    --> path(a,Y)?
+
+You may want to put queries into your 'graph' file so they will be
+processed when you load the file into the REP loop.]
+
+##ANSWER: (!!DO NOT PUT ANYTHING ON THIS LINE!!)
+
+    connected? NO [choose one]
+        [If YES, leave this part blank]
+        [If NO, fill in the ?s:] There is no path from d to a
+
+##QUESTION 3 (graph-2, 5 pts)
+
+Repeat ##QUESTION 2 by replacing the edge
+
+    edge(b,c).
+
+with the edge
+
+    edge(a,e).
+
+##ANSWER: (!!DO NOT PUT ANYTHING ON THIS LINE!!)
+
+    connected? NO [choose one]
+        [If YES, leave this part blank]
+        [If NO, fill in the ?s:] There is no path from a to d
+
+##NARRATIVE
+
+Consider a deck of 16 playing cards. Each card will have a 'rank'
+(j=jack, q=queen, k=king, a=ace) and a 'suit' (c=club, d=diamond,
+h=heart, s=spade). A card is specified by two letters: its rank
+followed by its suit. For example, 'as' is the ace of spades, and
+'jh' is the jack of hearts.
+
+In AbcDatalog, we can't tease apart the individual letters of a card
+(there is nothing like a 'charAt' function), but we can define facts
+that, in a brute force way, associate a card with its rank and suit. In
+particular, define the 'rank' and 'suit' relations as follows:
+
+    rank(jc,j).
+    rank(qc,q).
+    rank(kc,k).
+    rank(ac,a).
+    ... [do the same for the remaining 12 cards]
+
+    suit(jc,c).
+    suit(qc,c).
+    suit(kc,c).
+    suit(ac,c).
+    ... [do the same for the remaining 12 cards]
+
+A 'hand' is represented by an ID (a string of lowercase letters and
+digits, starting with a letter) followed by four cards. There should
+be no duplicate cards. Here is an example hand, represented as a fact
+in AbcDatalog. 
+
+    hand(hand1, ac, ah, ks, qc).
+
+Our objective is to determine which hands satisfy any of the following
+properties:
+
+    (1) pair (two cards in the hand with the same rank)
+    (2) two pair (two sets of pairs, with no overlap)
+    (3) three of a kind (three cards in the hand with the same rank)
+    (4) flush (all four cards having the same suit)
+    (5) four of a kind (all four cards having the same rank)
+
+Here are rules that yield all hands having a pair. Note that a pair
+can be part of a hand that also satisfies having two pair, three of
+a kind, and so forth. We do *not* disallow such a situation:
+
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R). % W and X have same rank
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Y,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Z,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(X,R), rank(Y,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(X,R), rank(Z,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(Y,R), rank(Z,R). 
+
+If we have the hand with ID hand1 as shown above, the query
+
+    pair(ID)?
+
+would produce the following result:
+
+    1 match:
+    pair(hand1)
+
+##QUESTION 4 (cards, 20 pts)
+
+Create a file named 'cards' containing all of the facts for rank and
+suit as described above. Also include the rules for pair, shown above.
+You are to define rules that yield all hands having two pair, three of
+a kind, flush, and four of a kind. The LHS of these rules should have
+the following form:
+
+    twopair(ID) :- ... % two pair
+    three(ID) :- ...   % three of a kind
+    flush(ID) :- ...   % flush
+    four(ID) :- ...    % four of a kind
+
+You will need only one rule for 'flush' and 'four', but you will need
+three rules for 'twopair' and four rules for 'three'. Put all of these
+rules in your 'cards' file.
+
+Once you have a 'cards' file, you can run the REP loop in the ABC
+language (be sure to define your environment variables as shown above)
+with your 'cards' database as follows:
+
+    java Rep cards
+
+Assuming that there are no errors in your rules, you will be prompted
+by '--> ' to enter additional facts and queries. Here is an example:
+
+    --> hand(hand1, ac, ah, ks, qc).
+    --> pair(ID)?
+    1 match:
+    pair(hand1)
+
+    --> twopair(ID)?
+
+    --> % end of REP interaction
+
+In the above example, 'twopair' returns no results, since 'hand1' does
+not have two pairs.
+
+To test your rules, you can create a file named 'hands' with several
+hands given as facts of the form
+
+    hand(id,x,y,z,w).
+
+where 'id' is a hand identifier string and 'x', 'y', 'z', and 'w' are
+cards. You should create hands that show your definitions of 'twopair',
+'three', 'flush', and 'four' are working properly. You can load both your
+'cards', and 'hands' files in your REP interaction with the ABC language
+as follows:
+
+    java Rep cards hands
+
+after which you can enter queries as shown above.
+
+##SUBMISSION REQUIREMENTS:
+
+Create a flat zip file AD.zip containing only the following files:
+
+    cards
+    ad
+
+where the 'ad' file is *this* file with your answers to QUESTION 1,
+QUESTION 2, and QUESTION 3 shown in their respective ANSWER sections,
+and 'cards' is the file you created in QUESTION 4. I will test your
+'cards' implementation using my own set of hands and queries.
+
+Submit your AD.zip file into your AD assignment dropbox in myCourses.

@@ -1,0 +1,64 @@
+% rank of 16 cards
+    rank(jc,j).
+    rank(qc,q).
+    rank(kc,k).
+    rank(ac,a).
+    rank(jh,j).
+    rank(qh,q).
+    rank(kh,k).
+    rank(ah,a).
+    rank(jd,j).
+    rank(qd,q).
+    rank(kd,k).
+    rank(ad,a).
+    rank(js,j).
+    rank(qs,q).
+    rank(ks,k).
+    rank(as,a).
+
+% all the suits of the 16 cards
+
+    suit(jc,c).
+    suit(qc,c).
+    suit(kc,c).
+    suit(ac,c).
+    suit(jh,h).
+    suit(qh,h).
+    suit(kh,h).
+    suit(ah,h).
+    suit(jd,d).
+    suit(qd,d).
+    suit(kd,d).
+    suit(ad,d).
+    suit(js,s).
+    suit(qs,s).
+    suit(ks,s).
+    suit(as,s).
+
+% pairs
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R). % W and X have same rank
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Y,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Z,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(X,R), rank(Y,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(X,R), rank(Z,R). 
+    pair(ID) :- hand(ID,W,X,Y,Z), rank(Y,R), rank(Z,R). 
+
+
+% two pair
+    twopair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R), rank(Y,Q), rank(Z,Q).
+    twopair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Y,R), rank(X,Q), rank(Z,Q).
+    twopair(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Z,R), rank(Y,Q), rank(X,Q).
+    
+% three of a kind
+    three(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R), rank(Y,R).
+    three(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R), rank(Z,R).
+    three(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(Z,R), rank(Y,R).
+    three(ID) :- hand(ID,W,X,Y,Z), rank(Z,R), rank(X,R), rank(Y,R).
+
+% flush
+    flush(ID) :- hand(ID,W,X,Y,Z), suit(W,S), suit(X,S), suit(Y,S), suit(Z,S). 
+    
+% four of a kind
+    four(ID) :- hand(ID,W,X,Y,Z), rank(W,R), rank(X,R), rank(Y,R), rank(Z,R).
+
+
